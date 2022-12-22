@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('git') {
+            steps {
+                git 'https://github.com/Sridhar-Peteti/CI-CD-Project-1.git'
+            }
+        }
+        stage("maven-build and renaming war file"){
+            steps{
+                sh "mvn clean package"
+                sh "mv /var/lib/jenkins/workspace/pipeline-1/target/*.war  /var/lib/jenkins/workspace/pipeline-1/target/apptest.war"
+            }
+        }
+        stage('deploy on remote tomcat server'){
+            steps{
+                sshagent(['985401e8-1ed5-437c-91a8-0ab6d8fa7414']) {
+                    sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/pipeline-1/target/apptest.war ec2-user@172.31.88.182:/opt/apache-tomcat-9.0.70/webapps/'
+                }
+            }
+        }
+    }
+}
