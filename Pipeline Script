@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+        node{
+            label 'dev'
+        }
+    }
+    stages {
+        stage('git') {
+            steps {
+                git 'https://github.com/Sridhar-Peteti/build-one.git'
+            }
+        }
+        stage("maven-build and renaming war file"){
+            steps{
+                sh "mvn clean package"
+                sh "mv /home/ec2-user/jenkins/workspace/pipeline-1/target/*.war  /home/ec2-user/jenkins/workspace/pipeline-1/target/myapp.war"
+            }
+        }
+        stage("deploy on tomcat"){
+            steps{
+                sh "sudo mv /home/ec2-user/jenkins/workspace/pipeline-1/target/myapp.war /opt/apache-tomcat-9.0.70/webapps/ "
+            }
+        }
+    }
+}
