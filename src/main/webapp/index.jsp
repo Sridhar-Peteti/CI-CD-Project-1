@@ -160,6 +160,7 @@
     </style>
   </head>
   <body>
+    <h1 style="color: red; font-size: 40px;" align="center"> May the Christmas Season bring only happiness and joy to you and your family </h1>
     <div class="christmas-tree">
       <div class="trunk"></div>
       <div class="leaves"></div>
