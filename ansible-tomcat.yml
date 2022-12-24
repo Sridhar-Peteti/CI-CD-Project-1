@@ -1,0 +1,36 @@
+---
+- hosts: test
+
+  tasks:
+
+    - name: getting tomact url
+      get_url:
+        url: "https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz"
+        dest: "/opt/"
+
+    - name: Untaring the downloaded file
+      unarchive:
+        src: /opt/apache-tomcat-9.0.70.tar.gz
+        dest: /opt/
+        remote_src: yes
+
+    - name: Installing dependency java
+      command: yum install java-1.8.0-openjdk -y
+
+    - name: copying context.xml
+      template:
+        src: /root/apache-tomcat-9.0.70/webapps/manager/META-INF/context.xml
+        dest: /opt/apache-tomcat-9.0.70/webapps/manager/META-INF
+
+    - name: starting tomcat server
+      shell: nohup /opt/apache-tomcat-9.0.70/bin/startup.sh
+
+    - name: copying tomcat-users.xml
+      template:
+        src: /root/apache-tomcat-9.0.70/conf/tomcat-users.xml
+        dest: /opt/apache-tomcat-9.0.70/conf/
+
+    - name: copying war file
+      copy:
+        src: /var/lib/jenkins/workspace/pipeline-1/target/myapp.war
+        dest: /opt/apache-tomcat-9.0.70/webapps/
