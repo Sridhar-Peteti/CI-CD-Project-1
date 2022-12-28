@@ -28,11 +28,11 @@
 	<distributionManagement>
   	  <snapshotRepository>
   	    <id>nexus-snapshots</id>
-  	    <url>http://44.201.56.90:8081/repository/sample-snapshots/</url>
+  	    <url>http://44.201.56.90:8081//repository/sample-snapshots/</url>
   	  </snapshotRepository>
  	  <repository>
 	    <id>nexus-releases</id>
-  	    <url>http://44.201.56.90:8081/repository/sample-releases/</url>
+  	    <url>http://44.201.56.90:8081//repository/sample-releases/</url>
   	  </repository>
   	</distributionManagement>
 	
